@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\TransactionController;
+use App\Jobs\ConfirmTransaction;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +28,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+});
+
+Route::get('/transactions/confirm', function () {
+    $tx = Transaction::first();
+
+    ConfirmTransaction::dispatch($tx)->afterCommit();
+
+    return 'dispatched';
 });
