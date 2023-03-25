@@ -78,6 +78,8 @@ class ConfirmTransaction implements ShouldQueue
 
     public function failed(Exception $e)
     {
-        logger()->error($e->getMessage());
+        logger()->error('ConfirmTransaction::handle', [
+            'erro_message' => $e->getMessage()
+        ]);
     }
 }
