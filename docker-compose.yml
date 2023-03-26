@@ -64,5 +64,10 @@ services:
       - ./docker/mysql/conf.d:/etc/mysql/conf.d
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
 
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    restart: unless-stopped
+
 volumes:
   laravel_10_queues_mysql:
