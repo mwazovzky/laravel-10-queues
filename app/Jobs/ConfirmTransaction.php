@@ -49,7 +49,7 @@ class ConfirmTransaction implements ShouldQueue
      */
     public function __construct(private Transaction $tx)
     {
-        //
+        logger()->info('ConfirmTransaction::__construct');
     }
 
     /**
@@ -78,7 +78,7 @@ class ConfirmTransaction implements ShouldQueue
 
     public function failed(Exception $e)
     {
-        logger()->error('ConfirmTransaction::handle', [
+        logger()->error('ConfirmTransaction::failed', [
             'erro_message' => $e->getMessage()
         ]);
     }

@@ -33,7 +33,21 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/transactions/confirm', function () {
     $tx = Transaction::first();
 
-    ConfirmTransaction::dispatch($tx)->afterCommit();
+    DB::transaction(function () use ($tx) {
+        // ConfirmTransaction::dispatch($tx);
+        // [2023-03-26 06:46:28] local.INFO: ConfirmTransaction::__construct
+        // [2023-03-26 06:46:31] local.INFO: ConfirmTransaction::handle
+        // [2023-03-26 06:46:31] local.INFO: Route::dispatch
 
-    return 'dispatched';
+        ConfirmTransaction::dispatch($tx)->afterCommit();
+        // [2023-03-26 06:47:45] local.INFO: ConfirmTransaction::__construct  
+        // [2023-03-26 06:47:49] local.INFO: Route::dispatch  
+        // [2023-03-26 06:47:49] local.INFO: ConfirmTransaction::handle  
+
+        sleep(3);
+
+        logger()->info('Route::dispatch');
+    });
+
+    return 'confirmed';
 });
