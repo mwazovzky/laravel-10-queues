@@ -9,6 +9,8 @@ php artisan queue:table
 php artisan migrate
 ```
 
+Config queue connection
+
 ```
 // .env
 QUEUE_CONNECTION=database
@@ -24,4 +26,35 @@ or listener (reloads code)
 
 ```
 php artisan queue:listen
+```
+
+### Queue driver redis
+
+Install redis
+
+```
+// .env
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+Install predis
+
+```
+composer require predis/predis
+```
+
+```
+// config/database
+'redis' => [
+        'client' => env('REDIS_CLIENT', 'predis'),
+],
+```
+
+Config redis connection
+
+```
+// .env
+QUEUE_CONNECTION=redis
 ```
